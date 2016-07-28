@@ -16,33 +16,51 @@
 
 import QtQuick 2.5
 import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.2
 
 Rectangle
 {
 	Button
 	{
-		x: parent.width - this.width
-		action: optionsAction
+		action: backAction
 	}
-	Image
+	GridLayout
 	{
-		id: kadse
+		id: settingsGrid
+		columns: 2
+		columnSpacing: 20
 		anchors.fill: parent
-		fillMode: Image.PreserveAspectFit
-	}
-	Timer
-	{
-		interval: settings.interval
-		running: true
-		repeat: true
-		triggeredOnStart: true
-		onTriggered: kadse.source = "https://maurudor.de/" + (settings.bigImage? "" : "thumb") + "?time=" + Date.now()
+		anchors.margins: 30
+		Text
+		{
+			text: "Refresh interval (in ms):"
+		}
+		SpinBox
+		{
+			id: interval
+			maximumValue: 60 * 60 * 100 //one hour
+			value: settings.interval
+		}
+		Text
+		{
+			text: "Display big images?"
+		}
+		Switch
+		{
+			id: bigImage
+			checked: settings.bigImage
+		}
 	}
 	Action
 	{
-		id: optionsAction
-		text: "&Settings"
-		iconName: "preferences-other"
-		onTriggered: pageLoader.source = "options.qml"
+		id: backAction
+		text: "&Back"
+		iconName: "go-previous"
+		onTriggered:
+		{
+			settings.interval = interval.value;
+			settings.bigImage = bigImage.checked;
+			pageLoader.source = "kadse.qml";
+		}
 	}
 }

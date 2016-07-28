@@ -37,6 +37,8 @@ Window
 		property alias windowY: window.y
 		property alias windowWidth: window.width
 		property alias windowHeight: window.height
+		property int interval: 60000
+		property bool bigImage: true
 		Component.onCompleted:
 		{
 			Qt.application.name = "QMLkadse";
