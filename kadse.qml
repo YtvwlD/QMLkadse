@@ -15,33 +15,21 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import QtQuick 2.5
-import QtQuick.Window 2.2
-import Qt.labs.settings 1.0
 
-Window
+Rectangle
 {
-	id: window
-	width: 360
-	height: 360
-	title: "QMLKadse"
-	Loader
+	Image
 	{
+		id: kadse
 		anchors.fill: parent
-		id: pageLoader
-		source: "kadse.qml"
+		fillMode: Image.PreserveAspectFit
 	}
-	Settings
+	Timer
 	{
-		id: settings
-		property alias windowX: window.x
-		property alias windowY: window.y
-		property alias windowWidth: window.width
-		property alias windowHeight: window.height
-		Component.onCompleted:
-		{
-			Qt.application.name = "QMLkadse";
-			Qt.application.organization = "YtvwlD";
-			Qt.application.domain = "ytvwld.de";
-		}
+		interval: 60000
+		running: true
+		repeat: true
+		triggeredOnStart: true
+		onTriggered: kadse.source = "https://maurudor.de/?time=" + Date.now()
 	}
 }
